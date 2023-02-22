@@ -1,7 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <localizationDictionary culture="en">
   <texts>
-    <text name="HomePage" value="Home page" />
+	<text name="HomePage" value="Home page" />
+	<text name="Articles" value="Articles" />
+	<text name="Books" value="Books" />
     <text name="About" value="About" />
     <text name="WelcomeMessage" value="Welcome to TopfinAPI!" />
     <text name="FormIsNotValidMessage" value="Form is not valid. Please check and fix errors." />
