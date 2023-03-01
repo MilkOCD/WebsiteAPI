@@ -1,10 +1,20 @@
 ﻿using Abp.Application.Services;
 using Abp.Authorization;
 using Abp.Domain.Repositories;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
+using System.IO;
+using FluentFTP;
 using System.Threading.Tasks;
 using TopfinAPI.Authorization;
+using System.Security.Authentication;
+using System.Net;
+using RestSharp;
+using System.Text;
+using RestSharp.Authenticators;
+using CloudinaryDotNet;
+using CloudinaryDotNet.Actions;
 
 namespace TopfinAPI.Books
 {
@@ -17,11 +27,10 @@ namespace TopfinAPI.Books
             _book = book;
         }
 
-        [AbpAuthorize(PermissionNames.Pages_Books)]
         public async Task<Book> Create(Book input)
         {
             var entity = ObjectMapper.Map<Book>(input);
-
+            
             return await _book.InsertAsync(entity);
         }
 
@@ -45,6 +54,27 @@ namespace TopfinAPI.Books
         public Task<Book> Update(int id, Book input)
         {
             throw new NotImplementedException();
+        }
+
+        public async Task<string> UploadImage(IFormFile file)
+        {
+            Account account = new Account(
+                "dvidarzkp",
+                "241215143565595",
+                "WdttlU7wIWHahJHbsNLKgJhtdBY"
+            );
+
+            Cloudinary cloudinary = new Cloudinary(account);
+
+            var uploadParams = new ImageUploadParams()
+            {
+                File = new FileDescription(file.FileName, file.OpenReadStream()),
+                Transformation = new Transformation().Width(300).Height(450).Crop("fill"),
+            };
+
+            var uploadResult = await cloudinary.UploadAsync(uploadParams);
+
+            return uploadResult.SecureUrl.ToString();
         }
     }
 }
