@@ -5,6 +5,7 @@ using TopfinAPI.Authorization.Users;
 using TopfinAPI.MultiTenancy;
 using TopfinAPI.Articles;
 using TopfinAPI.Books;
+using TopfinAPI.Knowledges;
 
 namespace TopfinAPI.EntityFrameworkCore
 {
@@ -13,6 +14,8 @@ namespace TopfinAPI.EntityFrameworkCore
         public DbSet<Article> Articles { get; set; }
 
         public DbSet<Book> Books { get; set; }
+
+        public DbSet<Knowledge> Knowledges { get; set; }
         /* Define a DbSet for each entity of the application */
 
         public TopfinAPIDbContext(DbContextOptions<TopfinAPIDbContext> options)

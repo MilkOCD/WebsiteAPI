@@ -13,6 +13,7 @@ namespace TopfinAPI.Authorization
             context.CreatePermission(PermissionNames.Pages_Roles, L("Roles"));
             context.CreatePermission(PermissionNames.Pages_Articles, L("Pages.Articles"));
             context.CreatePermission(PermissionNames.Pages_Books, L("Pages.Books"));
+            context.CreatePermission(PermissionNames.Pages_Knowledges, L("Pages.Knowledges"));
             //context.CreatePermission(PermissionNames.Pages_Articles, L("Pages.Articles"), multiTenancySides: MultiTenancySides.Host);
             context.CreatePermission(PermissionNames.Pages_Tenants, L("Tenants"), multiTenancySides: MultiTenancySides.Host);
         }

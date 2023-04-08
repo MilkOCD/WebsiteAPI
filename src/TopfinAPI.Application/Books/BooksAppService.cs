@@ -4,15 +4,8 @@ using Abp.Domain.Repositories;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
-using System.IO;
-using FluentFTP;
 using System.Threading.Tasks;
 using TopfinAPI.Authorization;
-using System.Security.Authentication;
-using System.Net;
-using RestSharp;
-using System.Text;
-using RestSharp.Authenticators;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
 
@@ -56,6 +49,7 @@ namespace TopfinAPI.Books
             throw new NotImplementedException();
         }
 
+        [AbpAuthorize(PermissionNames.Pages_Books)]
         public async Task<string> UploadImage(IFormFile file)
         {
             Account account = new Account(
