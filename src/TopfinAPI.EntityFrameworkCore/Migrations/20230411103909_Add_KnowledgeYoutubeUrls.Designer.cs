@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TopfinAPI.EntityFrameworkCore;
 
 namespace TopfinAPI.Migrations
 {
     [DbContext(typeof(TopfinAPIDbContext))]
-    partial class TopfinAPIDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230411103909_Add_KnowledgeYoutubeUrls")]
+    partial class Add_KnowledgeYoutubeUrls
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

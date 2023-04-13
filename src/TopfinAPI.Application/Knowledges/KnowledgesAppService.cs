@@ -1,5 +1,6 @@
 ﻿using Abp.Application.Services;
 using Abp.Authorization;
+using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
@@ -34,6 +35,8 @@ namespace TopfinAPI.Knowledges
         public async Task<Knowledge> Create(Knowledge input)
         {
             var entity = ObjectMapper.Map<Knowledge>(input);
+            // Auto add creation time
+            entity.CreationTime = DateTime.Now;
 
             return await _knowledge.InsertAsync(entity);
         }
@@ -45,9 +48,28 @@ namespace TopfinAPI.Knowledges
         }
 
         [AbpAuthorize(PermissionNames.Pages_Knowledges)]
-        public Task<Knowledge> Update(int id, Knowledge input)
+        public async Task<Knowledge> Update(int id, Knowledge input)
         {
-            throw new NotImplementedException();
+            var entity = await _knowledge.FirstOrDefaultAsync(id);
+
+            if (entity == null)
+            {
+                throw new EntityNotFoundException(typeof(Knowledge), id);
+            }
+
+            entity.Title = input.Title;
+            entity.Type = input.Type;
+            entity.Content = input.Content;
+            entity.ShortContent = input.ShortContent;
+            entity.HashTag = input.HashTag;
+            entity.ImageUrl = input.ImageUrl;
+            // Auto add creation time
+            entity.CreationTime = DateTime.Now;
+
+            //ObjectMapper.Map(input, entity);
+            await _knowledge.UpdateAsync(entity);
+
+            return entity;
         }
     }
 }
