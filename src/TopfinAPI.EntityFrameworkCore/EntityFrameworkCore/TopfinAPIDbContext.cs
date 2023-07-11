@@ -7,6 +7,7 @@ using TopfinAPI.Articles;
 using TopfinAPI.Books;
 using TopfinAPI.Knowledges;
 using TopfinAPI.KnowledgeYoutubeUrls;
+using TopfinAPI.Customers;
 
 namespace TopfinAPI.EntityFrameworkCore
 {
@@ -19,6 +20,7 @@ namespace TopfinAPI.EntityFrameworkCore
         public DbSet<Knowledge> Knowledges { get; set; }
         
         public DbSet<KnowledgeYoutubeUrl> KnowledgeYoutubeUrls { get; set; }
+        public DbSet<Customer> CustomUsers { get; set; }
         /* Define a DbSet for each entity of the application */
 
         public TopfinAPIDbContext(DbContextOptions<TopfinAPIDbContext> options)

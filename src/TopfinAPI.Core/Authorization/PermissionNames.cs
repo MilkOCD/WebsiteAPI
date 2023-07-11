@@ -11,5 +11,6 @@
         public const string Pages_Articles = "Pages.Articles";
         public const string Pages_Books = "Pages.Books";
         public const string Pages_Knowledges = "Pages.Knowledges";
+        public const string Pages_Customers = "Pages.Customers";
     }
 }
