@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using TopfinAPI.Authorization;
 using CloudinaryDotNet;
 using CloudinaryDotNet.Actions;
+using Abp.Domain.Entities;
 
 namespace TopfinAPI.Books
 {
@@ -44,9 +45,24 @@ namespace TopfinAPI.Books
         }
 
         [AbpAuthorize(PermissionNames.Pages_Books)]
-        public Task<Book> Update(int id, Book input)
+        public async Task<Book> Update(int id, Book input)
         {
-            throw new NotImplementedException();
+            var entity = await _book.FirstOrDefaultAsync(id);
+
+            if (entity == null)
+            {
+                throw new EntityNotFoundException(typeof(Book), id);
+            }
+
+            entity.Title = input.Title;
+            entity.Author = input.Author;
+            entity.Description = input.Description;
+            entity.Link = input.Link;
+            entity.Image = input.Image;
+
+            await _book.UpdateAsync(entity);
+
+            return entity;
         }
 
         [AbpAuthorize(PermissionNames.Pages_Books)]
