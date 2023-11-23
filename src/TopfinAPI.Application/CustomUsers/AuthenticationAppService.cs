@@ -1,13 +1,17 @@
 ﻿using Abp.Application.Services;
 using Abp.Authorization;
+using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
 using Abp.UI;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TopfinAPI.Authorization;
 using TopfinAPI.Customers;
+using TopfinAPI.EmailSenders;
 
 namespace TopfinAPI.CustomUsers
 {
@@ -32,7 +36,7 @@ namespace TopfinAPI.CustomUsers
         [AbpAuthorize(PermissionNames.Pages_Customers)]
         public async Task<List<Customer>> GetAll()
         {
-            return await _customerRepository.GetAllListAsync();
+            return await _customerRepository.GetAll().Where(customer => (customer.isDelete == null || customer.isDelete == false)).ToListAsync();
         }
 
         public async Task<Customer> CreateCustomer(RegisterInputDto input)
@@ -62,12 +66,41 @@ namespace TopfinAPI.CustomUsers
                     CustomerType = "0"
                 };
 
+                string emailSubject = "Người dùng mới đã đăng ký tài khoản";
+                string userName = input.UserName;
+                string emailMessage = input.Email;
+                string htmlInput = "<div><h1>Người dùng mới đã đăng ký tài khoản<h1></div>" +
+                    "<div>Tên người dùng: <b>" + input.UserName + "</b></div>" +
+                    "<div>Email: <b>" + input.Email + "</b></div>" +
+                    "<div>SĐT: <b>" + input.PhoneNumber + "</b></div>" +
+                    "<div>Mã giới thiệu: <b>" + input.ReferralCode + "</b></div>";
+
+                EmailSender emailSender = new EmailSender();
+                emailSender.SendEmail(emailSubject, "trantrungoh@gmail.com", userName, emailMessage, htmlInput).Wait();
+
                 return await _customerRepository.InsertAsync(customer);
             }
             catch (Exception exception)
             {
                 throw new UserFriendlyException("Đã xảy lỗi trong quá trình tạo tài khoản!\n" + exception);
             }
+        }
+
+        [AbpAuthorize(PermissionNames.Pages_AnalysisCenters)]
+        public async Task<Customer> SoftDelete(int id)
+        {
+            var entity = await _customerRepository.FirstOrDefaultAsync(id);
+
+            if (entity == null)
+            {
+                throw new EntityNotFoundException(typeof(Customer), id);
+            }
+
+            entity.isDelete = true;
+
+            await _customerRepository.UpdateAsync(entity);
+
+            return entity;
         }
     }
 }

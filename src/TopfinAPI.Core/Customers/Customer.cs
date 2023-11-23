@@ -14,5 +14,6 @@ namespace TopfinAPI.Customers
         public string PhoneNumber { get; set; }
         public string ReferralCode { get; set; }
         public string CustomerType { get; set; }
+        public Boolean? isDelete { get; set; }
     }
 }

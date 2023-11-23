@@ -9,6 +9,7 @@ using TopfinAPI.Knowledges;
 using TopfinAPI.KnowledgeYoutubeUrls;
 using TopfinAPI.Customers;
 using TopfinAPI.AnalysisCenters;
+using TopfinAPI.MarketEvaluations;
 
 namespace TopfinAPI.EntityFrameworkCore
 {
@@ -22,6 +23,7 @@ namespace TopfinAPI.EntityFrameworkCore
         
         public DbSet<KnowledgeYoutubeUrl> KnowledgeYoutubeUrls { get; set; }
         public DbSet<Customer> CustomUsers { get; set; }
+        public DbSet<MarketEvaluation> MarketEvaluations { get; set; }
         public DbSet<AnalysisCenter> AnalysisCenters { get; set; }
         /* Define a DbSet for each entity of the application */
 

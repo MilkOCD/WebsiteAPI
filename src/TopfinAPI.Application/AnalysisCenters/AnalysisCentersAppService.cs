@@ -2,10 +2,13 @@
 using Abp.Authorization;
 using Abp.Domain.Entities;
 using Abp.Domain.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TopfinAPI.Authorization;
+using TopfinAPI.EmailSenders;
 
 namespace TopfinAPI.AnalysisCenters
 {
@@ -35,6 +38,12 @@ namespace TopfinAPI.AnalysisCenters
         public async Task<List<AnalysisCenter>> GetAll()
         {
             return await _analysisCenter.GetAllListAsync();
+        }
+
+        public async Task<List<AnalysisCenter>> GetAllByType(String type, int pageNumber, int pageSize)
+        {
+            // return await _analysisCenter.GetAll().Where(d => d.Type == type).ToListAsync();
+            return await _analysisCenter.GetAll().Skip((pageNumber - 1) * pageSize).Take(pageSize).ToListAsync();
         }
 
         [AbpAuthorize(PermissionNames.Pages_AnalysisCenters)]

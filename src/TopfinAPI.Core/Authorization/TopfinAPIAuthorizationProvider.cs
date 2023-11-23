@@ -14,6 +14,7 @@ namespace TopfinAPI.Authorization
             context.CreatePermission(PermissionNames.Pages_Articles, L("Pages.Articles"));
             context.CreatePermission(PermissionNames.Pages_Books, L("Pages.Books"));
             context.CreatePermission(PermissionNames.Pages_Knowledges, L("Pages.Knowledges"));
+            context.CreatePermission(PermissionNames.Pages_MarketEvaluations, L("Pages.MarketEvaluations"));
             context.CreatePermission(PermissionNames.Pages_AnalysisCenters, L("Pages.AnalysisCenters"));
             context.CreatePermission(PermissionNames.Pages_Customers, L("Pages.Customers"));
             //context.CreatePermission(PermissionNames.Pages_Articles, L("Pages.Articles"), multiTenancySides: MultiTenancySides.Host);
